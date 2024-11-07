@@ -81,7 +81,7 @@ int main(int argc, char* argv[]){
         updatebodies(bodies, dt);
 
         std::cout << "Iteration " << i << ":\n";
-        for(const auto& b :  bodies){
+        for(const auto& b : bodies){
             std::cout << "Body at (" << b.x << ", " << b.y << ")\n";
         }
         std::cout << "\n";
