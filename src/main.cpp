@@ -4,6 +4,8 @@
 #include <cstdlib>
 #include <random>
 
+#include <GLFW/glfw3.h>
+
 // Struct to store all the info about the single Body
 struct Body {
     double mass;
@@ -15,7 +17,7 @@ struct Body {
 // Function that computes forces acting on the bodies 
 void computeForces(std::vector<Body>& bodies){
 
-    const double G = 6.67430e-11; // Constant G
+    const double G = 1; // Constant G
     for (size_t i = 0; i < bodies.size(); i++){
         bodies[i].ax = 0.0;
         bodies[i].ay = 0.0;
@@ -23,10 +25,10 @@ void computeForces(std::vector<Body>& bodies){
             if (i != j){
                 double dx = bodies[j].x - bodies[i].x;
                 double dy = bodies[j].y - bodies[i].y; 
-                double distance = std::sqrt(dx*dx + dy*dy);
+                double distance = std::sqrt(dx*dx + dy*dy); 
                 // handling bodies that are really far from each other
                 if (distance > 1e-5){
-                    double force = G * bodies[i].mass * bodies[j].mass / (distance * distance);
+                    double force = G * bodies[i].mass * bodies[j].mass / (distance * distance); // Newton's gravitional law
                     bodies[i].ax += force * dx / (distance * bodies[i].mass);
                     bodies[i].ay += force * dy / (distance * bodies[i].mass);  
                 }
@@ -36,7 +38,7 @@ void computeForces(std::vector<Body>& bodies){
 }
 
 // Function that updates the bodies positions and velocities
-void updatebodies(std::vector<Body>& bodies, double dt){
+void updateBodies(std::vector<Body>& bodies, double dt){
 
     for (auto& b : bodies){
         b.vx += b.ax * dt;
@@ -44,6 +46,18 @@ void updatebodies(std::vector<Body>& bodies, double dt){
         b.x += b.vx * dt;
         b.y += b.vy * dt;   
     }
+}
+
+// Function to render bodies with OpenGL
+void renderBodies(const std::vector<Body>& bodies){
+    glClear(GL_COLOR_BUFFER_BIT);
+    glBegin(GL_POINTS);
+    for (const auto& b : bodies){
+        float xNorm = static_cast<float>(b.x) / 100.0f;
+        float yNorm = static_cast<float>(b.y) / 100.0f;
+        glVertex2f(xNorm, yNorm);
+    }
+    glEnd();
 }
 
 int main(int argc, char* argv[]){
@@ -60,7 +74,7 @@ int main(int argc, char* argv[]){
 
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_real_distribution<> massDist(1.0, 10.0); // Mass range [1.0, 10.0]
+    std::uniform_real_distribution<> massDist(100.0, 1000.0); // Mass range [1.0, 10.0]
     std::uniform_real_distribution<> posDist(-100.0, 100.0); // Position range [-100.0, 100.0]
     std::uniform_real_distribution<> velDist(-10.0, 10.0); // Velocity range [-10.0, 10.0]
     std::uniform_real_distribution<> accDist(-0.1, 0.1);
@@ -75,16 +89,35 @@ int main(int argc, char* argv[]){
         };
     }
 
-    double dt = 0.01; 
-    for (int i = 0; i < 1000; i++){
-        computeForces(bodies);
-        updatebodies(bodies, dt);
-
-        std::cout << "Iteration " << i << ":\n";
-        for(const auto& b : bodies){
-            std::cout << "Body at (" << b.x << ", " << b.y << ")\n";
-        }
-        std::cout << "\n";
+    // checking glw initialization
+    if(!glfwInit()){
+        std::cerr << "Failed to initialize GLFW\n";
+        return -1;
     }
+
+    GLFWwindow* window = glfwCreateWindow(800, 800, "N Body Simulation", nullptr, nullptr);
+    if (!window){
+        std::cerr << "Failed to create glfw window\n";
+        glfwTerminate();
+        return -1;
+    }
+
+    glfwMakeContextCurrent(window);
+    glPointSize(15.0f);
+
+    double dt = 0.01; 
+
+    while (!glfwWindowShouldClose(window)){
+        computeForces(bodies);
+        updateBodies(bodies, dt);
+
+        renderBodies(bodies);
+
+        glfwSwapBuffers(window);
+        
+        glfwPollEvents();
+    }
+
+    glfwTerminate();
     return 0;
 }
