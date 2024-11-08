@@ -14,6 +14,8 @@ endif()
 include_directories(${GLFW_INCLUDE_DIRS})
 link_directories(${GLFW_LIBRARY_DIRS})
 
+include_directories("/opt/homebrew/opt/glm/include")
+
 add_executable(nbody_simulation ../src/main.cpp)
 target_compile_definitions(nbody_simulation PRIVATE GL_SILENCE_DEPRECATION)
 target_link_libraries(nbody_simulation ${GLFW_LIBRARIES})

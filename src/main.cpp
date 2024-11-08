@@ -3,48 +3,42 @@
 #include <cmath>
 #include <cstdlib>
 #include <random>
+#include <glm/glm.hpp>
 
 #include <GLFW/glfw3.h>
 
 // Struct to store all the info about the single Body
 struct Body {
     double mass;
-    double x,y; // position
-    double vx,vy; // velocity
-    double ax,ay; // acceleration
+    glm::vec2 position;
+    glm::vec2 velocity;
+    glm::vec2 acceleration;
 };
+
 
 // Function that computes forces acting on the bodies 
 void computeForces(std::vector<Body>& bodies){
-
     const double G = 1; // Constant G
-    for (size_t i = 0; i < bodies.size(); i++){
-        bodies[i].ax = 0.0;
-        bodies[i].ay = 0.0;
+
+    for (size_t i = 0; i < bodies.size(); ++i) {
+        bodies[i].acceleration = glm::vec2(0.0, 0.0);
+
         for (size_t j = 0; j < bodies.size(); j++){
             if (i != j){
-                double dx = bodies[j].x - bodies[i].x;
-                double dy = bodies[j].y - bodies[i].y; 
-                double distance = std::sqrt(dx*dx + dy*dy); 
-                // handling bodies that are really far from each other
-                if (distance > 1e-5){
-                    double force = G * bodies[i].mass * bodies[j].mass / (distance * distance); // Newton's gravitional law
-                    bodies[i].ax += force * dx / (distance * bodies[i].mass);
-                    bodies[i].ay += force * dy / (distance * bodies[i].mass);  
-                }
+                double distance = glm::length(bodies[j].position - bodies[i].position);
+                glm::vec2 direction = glm::normalize(bodies[j].position - bodies[i].position);
+                double force = G * bodies[i].mass * bodies[j].mass / (distance * distance);
+                bodies[i].acceleration += static_cast<float>(force / bodies[i].mass) * direction;
             }
         }
     }
 }
 
 // Function that updates the bodies positions and velocities
-void updateBodies(std::vector<Body>& bodies, double dt){
-
-    for (auto& b : bodies){
-        b.vx += b.ax * dt;
-        b.vy += b.ay * dt;
-        b.x += b.vx * dt;
-        b.y += b.vy * dt;   
+void updateBodies(std::vector<Body>& bodies, double dt) {
+    for (auto& b : bodies) {
+        b.velocity += b.acceleration * static_cast<float>(dt);
+        b.position += b.velocity * static_cast<float>(dt);
     }
 }
 
@@ -53,8 +47,8 @@ void renderBodies(const std::vector<Body>& bodies){
     glClear(GL_COLOR_BUFFER_BIT);
     glBegin(GL_POINTS);
     for (const auto& b : bodies){
-        float xNorm = static_cast<float>(b.x) / 100.0f;
-        float yNorm = static_cast<float>(b.y) / 100.0f;
+        float xNorm = static_cast<float>(b.position.x) / 100.0f;
+        float yNorm = static_cast<float>(b.position.y) / 100.0f;
         glVertex2f(xNorm, yNorm);
     }
     glEnd();
@@ -83,9 +77,9 @@ int main(int argc, char* argv[]){
     for (int i = 0; i < nBodies; ++i){
         bodies[i] = {
             massDist(gen), // Random mass
-            posDist(gen), posDist(gen), // Random initial position (x, y)
-            velDist(gen), velDist(gen), // Random initial velocity (vx, vy)
-            accDist(gen), accDist(gen)  // Random initial acceleration (ax, ay)
+            glm::vec2(posDist(gen), posDist(gen)), // Random initial position (x, y)
+            glm::vec2(velDist(gen), velDist(gen)), // Random initial velocity (vx, vy)
+            glm::vec2(accDist(gen), accDist(gen))  // Random initial acceleration (ax, ay)
         };
     }
 
@@ -105,7 +99,7 @@ int main(int argc, char* argv[]){
     glfwMakeContextCurrent(window);
     glPointSize(15.0f);
 
-    double dt = 0.01; 
+    double dt = 0.005; 
 
     while (!glfwWindowShouldClose(window)){
         computeForces(bodies);
