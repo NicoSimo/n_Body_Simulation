@@ -43,3 +43,8 @@ Run the compiled program following this structure:
     ``` bash
     brew install glfw
     ```
+
+- **GLM**
+    ``` bash
+    brew install glm
+    ```
