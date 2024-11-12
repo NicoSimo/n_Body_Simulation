@@ -49,6 +49,7 @@ int main(int argc, char* argv[]){
 
     if (!glfwInit())
         return -1;
+        
     GLFWwindow *window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "N-Body Simulation CPU", NULL, NULL); // create window
     if (!window)
     {
@@ -61,11 +62,14 @@ int main(int argc, char* argv[]){
     glMatrixMode(GL_PROJECTION);      // set up projection matrix
     glLoadIdentity();
     glOrtho(0.0f, WINDOW_WIDTH, WINDOW_HEIGHT, 0.0f, -1.0f, 1.0f);
+
     while (!glfwWindowShouldClose(window)) // main loop
     {
         glClear(GL_COLOR_BUFFER_BIT); // clear the screen
+    
         s.updateForces();
         drawDots(s);
+    
         glfwSwapBuffers(window); // swap front and back buffers
         glfwPollEvents();        // poll for events
     }

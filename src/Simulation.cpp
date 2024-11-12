@@ -36,7 +36,7 @@ void Simulation::Simulate(){
         float esc = std::sqrt(GRAVITY * SUN_MASS / distance);
         glm::vec2 velocity = glm::vec2(-a.y, a.x) * esc;
 
-        bodies.push_back(std::make_shared<Body>(EARTH_MASS, EARTH_DIA, position, glm::vec2(0, 0), glm::vec2(0, 0)));
+        bodies.push_back(std::make_shared<Body>(EARTH_MASS, EARTH_DIA, position, velocity, glm::vec2(0, 0)));
     }
     bodies.push_back(std::make_shared<Body>(SUN_MASS, SUN_DIA, centerPos, glm::vec2(0, 0), glm::vec2(0, 0), false));
 }

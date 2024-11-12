@@ -28,28 +28,25 @@ void Physics::calculateAcceleration()
                 force += rij * f;
             }
         }
-
         bi.acceleration += (force / bi.mass);
     }
 }
 
 void Physics::calculateVelocity()
 {
-
     for (auto &body : bodies)
     {
         body->velocity += (body->acceleration * dt);
+        //std::cout << "Body Velocity: (" << body->velocity.x << ", " << body->velocity.y << ")\n";
     }
 }
 
 void Physics::calculatePosition()
 {
-    double boundaryWidth = NBODY_WIDTH, boundaryHeight = NBODY_HEIGHT;
-
-    // check if body is at boundary
     for (auto &body : bodies)
     {
         body->position += body->velocity * dt;
+        //std::cout << "Body Position: (" << body->position.x << ", " << body->position.y << ")\n";
     }
 }
 
