@@ -5,19 +5,14 @@
 
 class Body {
 public :
+    bool isDynamic;
+    float mass;
+    float radius;
     glm::vec2 position;
     glm::vec2 velocity;
     glm::vec2 acceleration;
-    float mass;
 
-    Body();
-    Body(glm::vec2 position, glm::vec2 velocity, glm::vec2 acceleration, float mass);
-
-    friend std::ostream& operator<<(std::ostream& os, const Body& b) {
-        os << "Position: (" << b.position.x << ", " << b.position.y << "), "
-            << "Velocity: (" << b.velocity.x << ", " << b.velocity.y << "), "
-            << "Acceleration: (" << b.acceleration.x << ", " << b.acceleration.y << "), "
-            << "Mass: " << b.mass;
-        return os;
-    }
+    Body(float mass, float radius, glm::vec2 position, glm::vec2 velocity, glm::vec2 acceleration = glm::vec2(0.0f, 0.0f))
+        : mass(mass), radius(radius), position(position), velocity(velocity), acceleration(acceleration) {}
+    friend std::ostream &operator<<(std::ostream &os, const Body &b);
 };

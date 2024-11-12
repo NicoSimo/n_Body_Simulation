@@ -4,31 +4,57 @@
 #include <glm/glm.hpp>
 
 #include "Body.h"
+#include "Physics.h"
+#include "constants.h"  
+#include "Simulation.h"
 
-void computeForces(std::vector<Body>& bodies){
-    for(int i = 0; i < bodies.size(); ++i){
-        glm::vec2 position1 = bodies[i].position;
-        
-        for(int j = 0; j < bodies.size(); ++j){
-            if(i != j){
-                glm::vec2 position2 = bodies[j].position;
-                float m2 = bodies[j].mass;
+Physics::Physics(std::vector<std::shared_ptr<Body>> &bs, int n) : bodies(bs), nBodies(n) {}
 
-                glm::vec2 r =  position2 - position1;
-                float mag_sq = r.x * r.x + r.y * r.y;
-                float mag = std::sqrt(mag_sq);
-                
-                glm::vec2 a1 = (m2 / (mag_sq * mag)) * r;
-                bodies[i].acceleration += a1;
-            }  
+void Physics::calculateAcceleration()
+{
+    for (int i = 0; i < nBodies; ++i)
+    {
+        Body &bi = *bodies[i];
+        bi.acceleration = glm::vec2(0.0f, 0.0f);
+        glm::vec2 force(0.0f, 0.0f);
+        for (int j = 0; j < nBodies; ++j)
+        {
+            Body &bj = *bodies[j];
+            if (i != j && bi.isDynamic && !isCollide(bi, bj))
+            {
+                glm::vec2 rij = bj.position - bi.position;
+                float r = sqrt((rij.x * rij.x) + (rij.y * rij.y) + (epsilon * epsilon));
+                float f = (GRAVITY * bi.mass * bj.mass) / (r * r * r + (epsilon * epsilon));
+                force += rij * f;
+            }
         }
+
+        bi.acceleration += (force / bi.mass);
     }
 }
 
-void updateBodies(std::vector<Body>& bodies, float dT){
-    for (auto& body : bodies) {
-        body.position += body.velocity * dT;
-        body.velocity += body.acceleration * dT;
-        body.acceleration = glm::vec2(0.0f, 0.0f); 
+void Physics::calculateVelocity()
+{
+
+    for (auto &body : bodies)
+    {
+        body->velocity += (body->acceleration * dt);
     }
+}
+
+void Physics::calculatePosition()
+{
+    double boundaryWidth = NBODY_WIDTH, boundaryHeight = NBODY_HEIGHT;
+
+    // check if body is at boundary
+    for (auto &body : bodies)
+    {
+        body->position += body->velocity * dt;
+    }
+}
+
+void Physics::updateBodies(){
+    calculateAcceleration();
+    calculateVelocity();
+    calculatePosition();
 }
