@@ -10,16 +10,16 @@ void Physics::calculateAcceleration()
     for (int i = 0; i < nBodies; ++i)
     {
         Body &bi = *bodies[i];
-        bi.acceleration = glm::vec2(0, 0);
-        glm::vec2 force(0, 0);
+        bi.acceleration = glm::vec3(0, 0, 0);
+        glm::vec3 force(0, 0, 0);
         for (int j = 0; j < nBodies; ++j)
         {
             Body &bj = *bodies[j];
             if (i != j && bi.isDynamic && !isCollide(bi, bj))
             {
 
-                glm::vec2 rij = bj.position - bi.position;
-                float r = sqrt((rij.x * rij.x) + (rij.y * rij.y) + (epsilon * epsilon));
+                glm::vec3 rij = bj.position - bi.position;
+                float r = sqrt((rij.x * rij.x) + (rij.y * rij.y) + (rij.z * rij.z)+ (epsilon * epsilon));
                 float f = (GRAVITY * bi.mass * bj.mass) / (r * r * r + (epsilon * epsilon));
                 force += rij * f;
             }

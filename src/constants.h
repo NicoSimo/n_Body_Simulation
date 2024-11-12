@@ -19,13 +19,18 @@
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
-#define NUM_BODIES 100
 #define WINDOW_WIDTH 1600
 #define WINDOW_HEIGHT 1600
+#define WINDOW_DEPTH 1600
+
 #define NBODY_WIDTH 10.0e11
 #define NBODY_HEIGHT 10.0e11
+#define NBODY_DEPTH 10.0e11
+
 #define CENTERX 0
 #define CENTERY 0
+#define CENTERZ 0
+
 #define GRAVITY 6.67E-11
 #define COLLISION_TH 1.0e10
 #define MIN_DIST 2.0e10

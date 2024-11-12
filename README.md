@@ -27,8 +27,9 @@ make
 
 Run the compiled program following this structure:
 ``` bash
-./nbody_simulation number_of_bodies
+./nbody_simulation <number_of_bodies> <2d or 3d>
 ```
+
 
 ### Requirements 
 
