@@ -18,27 +18,27 @@ void Simulation::Simulate()
     srand(time(NULL));
 
     bodies.clear();
-    double maxDistance = MAX_DIST;
-    double minDistance = MIN_DIST;
+    float maxDistance = MAX_DIST;
+    float minDistance = MIN_DIST;
     glm::vec2 centerPos(CENTERX, CENTERY);
     for (int i = 0; i < nBodies - 1; ++i)
     {
 
-        double angle = 2 * M_PI * (rand() / (double)RAND_MAX);
+        float angle = 2 * M_PI * (rand() / (float)RAND_MAX);
         // Generate random distance from center within the given max distance
-        double radius = (maxDistance - minDistance) * (rand() / (double)RAND_MAX) + minDistance;
+        float radius = (maxDistance - minDistance) * (rand() / (float)RAND_MAX) + minDistance;
 
         // Calculate coordinates of the point
-        double x = centerPos.x + radius * std::cos(angle);
-        double y = centerPos.y + radius * std::sin(angle);
+        float x = centerPos.x + radius * std::cos(angle);
+        float y = centerPos.y + radius * std::sin(angle);
 
         glm::vec2 position(x, y);
-        double distance = glm::distance(position, centerPos);
+        float distance = glm::distance(position, centerPos);
         glm::vec2 r = position - centerPos;
         glm::vec2 a = r / static_cast<float>(distance);
 
         // Calculate velocity glm::vec2 components
-        double esc = sqrt((GRAVITY * SUN_MASS) / (distance));
+        float esc = sqrt((GRAVITY * SUN_MASS) / (distance));
         glm::vec2 velocity(-a.y * esc, a.x * esc);
 
         bodies.push_back(std::make_shared<Body>(EARTH_MASS, EARTH_DIA, position, velocity, glm::vec2(0, 0)));

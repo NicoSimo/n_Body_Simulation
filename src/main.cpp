@@ -11,8 +11,8 @@
 glm::vec2 scaleToWindow(glm::vec2 pos)
 {
 
-     double scaleX = WINDOW_HEIGHT / NBODY_HEIGHT;
-     double scaleY = WINDOW_WIDTH / NBODY_WIDTH;
+     float scaleX = WINDOW_HEIGHT / NBODY_HEIGHT;
+     float scaleY = WINDOW_WIDTH / NBODY_WIDTH;
      return glm::vec2((pos.x - 0) * scaleX + WINDOW_WIDTH / 2, (pos.y - 0) * scaleY + WINDOW_HEIGHT / 2);
 }
 
