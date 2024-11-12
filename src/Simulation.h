@@ -1,20 +1,17 @@
 #pragma once
-
-#include <iostream>
-#include <glm/glm.hpp>
 #include <vector>
-
+#include <memory>
 #include "Body.h"
-#include "Physics.h"
+#include "algorithm.h"
 
 class Simulation
 {
+    std::unique_ptr<Algorithm> alg;
     int nBodies;
     void Simulate();
-    Physics physics;
 
 public:
     std::vector<std::shared_ptr<Body>> bodies;
-    Simulation(int n);
-    void updateForces();
+    Simulation(int n, int a);
+    void update();
 };

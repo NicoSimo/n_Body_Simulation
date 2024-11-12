@@ -1,5 +1,5 @@
 /*
-   Copyright 2023 Hsin-Hung Wu : 
+   Copyright 2023 Hsin-Hung Wu
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -16,23 +16,8 @@
 
 // credits : https://github.com/Hsin-Hung/N-body-simulation
 
-#ifndef CONSTANTS_H
-#define CONSTANTS_H
+#include "algorithm.h"
 
-#define NUM_BODIES 100
-#define WINDOW_WIDTH 1600
-#define WINDOW_HEIGHT 1600
-#define NBODY_WIDTH 10.0e11
-#define NBODY_HEIGHT 10.0e11
-#define CENTERX 0
-#define CENTERY 0
-#define GRAVITY 6.67E-11
-#define COLLISION_TH 1.0e10
-#define MIN_DIST 2.0e10
-#define MAX_DIST 5.0e11
-#define SUN_MASS 1.9890e30
-#define SUN_DIA 1.3927e6
-#define EARTH_MASS 5.974e24
-#define EARTH_DIA 12756
-
-#endif
+Algorithm::Algorithm(std::vector<std::shared_ptr<Body>> &bs, int n) : bodies(bs), nBodies(n)
+{
+}
