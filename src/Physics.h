@@ -1,16 +1,14 @@
 #pragma once
-
-#include <glm/glm.hpp>
 #include <vector>
 #include <memory>
-#include "Body.h"
-#include "Algorithm.h"
-
+#include "body.h"
+#include "constants.h"
+#include "algorithm.h"
 
 class Physics : public Algorithm
 {
-    const float epsilon = 0.5;
-    const float dt = 25000.0;
+    const double epsilon = 0.5;
+    const double dt = 25000.0;
 
     void calculateAcceleration();
     void calculateVelocity();

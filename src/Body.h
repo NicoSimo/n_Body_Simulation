@@ -1,18 +1,17 @@
 #pragma once
-
 #include <iostream>
-#include <glm/glm.hpp>
+#include "vector.h"
 
-class Body {
-public :
+class Body
+{
+public:
     bool isDynamic;
-    float mass;
-    float radius;
-    glm::vec2 position;
-    glm::vec2 velocity;
-    glm::vec2 acceleration;
+    double mass;
+    double radius;
+    Vector position;
+    Vector velocity;
+    Vector acceleration;
 
-    Body(float mass, float radius, glm::vec2 position, glm::vec2 velocity, glm::vec2 acceleration = glm::vec2(0.0f, 0.0f), bool d = true)
-        : mass(mass), radius(radius), position(position), velocity(velocity), acceleration(acceleration), isDynamic(d){}
+    Body(double m, double r, Vector p, Vector v, Vector a, bool d = true) : mass(m), radius(r), position(p), velocity(v), acceleration(a), isDynamic(d) {}
     friend std::ostream &operator<<(std::ostream &os, const Body &b);
 };

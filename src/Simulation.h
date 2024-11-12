@@ -1,12 +1,9 @@
 #pragma once
-
-#include <iostream>
-#include <glm/glm.hpp>
 #include <vector>
-
+#include <memory>
+#include "vector.h"
 #include "Body.h"
-#include "Physics.h"
-#include "Algorithm.h"
+#include "algorithm.h"
 
 class Simulation
 {
@@ -16,6 +13,6 @@ class Simulation
 
 public:
     std::vector<std::shared_ptr<Body>> bodies;
-    Simulation(int n);
+    Simulation(int n, int a);
     void update();
 };

@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 project(NBodySimulation)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 
 include_directories("/opt/homebrew/opt/glm/include")
 
@@ -15,11 +15,12 @@ find_library(OPENGL_LIBRARY OpenGL)
 include_directories(${GLFW_INCLUDE_DIRS})
 
 add_executable(nbody 
-    ../src/Main.cpp
+    ../src/main.cpp
     ../src/Body.cpp
-    ../src/Physics.cpp
+    ../src/algorithm.cpp
+    ../src/vector.cpp
     ../src/Simulation.cpp
-    ../src/Algorithm.cpp
+    ../src/Physics.cpp
 )
 
 target_link_libraries(nbody glfw ${OPENGL_LIBRARY} ${COCOA_LIBRARY})
