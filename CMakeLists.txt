@@ -8,6 +8,10 @@ include_directories("/opt/homebrew/opt/glm/include")
 add_definitions(-DGL_SILENCE_DEPRECATION)
 
 find_package(glfw3 3.3 REQUIRED)
+
+find_library(COCOA_LIBRARY Cocoa)
+find_library(OPENGL_LIBRARY OpenGL)
+
 include_directories(${GLFW_INCLUDE_DIRS})
 
 add_executable(nbody 
@@ -17,4 +21,4 @@ add_executable(nbody
     ../src/Simulation.cpp
 )
 
-target_link_libraries(nbody glfw)
+target_link_libraries(nbody glfw ${OPENGL_LIBRARY} ${COCOA_LIBRARY})

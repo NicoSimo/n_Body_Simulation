@@ -53,6 +53,13 @@ void Physics::calculatePosition()
     }
 }
 
+bool Physics::isCollide(Body b1, Body b2)
+{
+    float combinedRadius = b1.radius + b2.radius + COLLISION_TH;
+    return glm::distance(b1.position, b2.position) <= combinedRadius * combinedRadius;
+}
+
+
 void Physics::updateBodies(){
     calculateAcceleration();
     calculateVelocity();
