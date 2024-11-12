@@ -19,8 +19,8 @@ void Physics::calculateAcceleration()
             {
 
                 Vector rij = bj.position - bi.position;
-                double r = sqrt((rij.x * rij.x) + (rij.y * rij.y) + (epsilon * epsilon));
-                double f = (GRAVITY * bi.mass * bj.mass) / (r * r * r + (epsilon * epsilon));
+                float r = sqrt((rij.x * rij.x) + (rij.y * rij.y) + (epsilon * epsilon));
+                float f = (GRAVITY * bi.mass * bj.mass) / (r * r * r + (epsilon * epsilon));
                 force += rij * f;
             }
         }
@@ -38,7 +38,7 @@ void Physics::calculateVelocity()
 
 void Physics::calculatePosition()
 {
-    double boundaryWidth = NBODY_WIDTH, boundaryHeight = NBODY_HEIGHT;
+    float boundaryWidth = NBODY_WIDTH, boundaryHeight = NBODY_HEIGHT;
 
     // check if body is at boundary
     for (auto &body : bodies)

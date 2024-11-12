@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <stdlib.h>
 #include <math.h>
+#include <glm/glm.hpp>
 #include "Simulation.h"
 #include "Physics.h"
 #include "constants.h"
@@ -36,7 +37,7 @@ void Simulation::Simulate()
         Vector r = position - centerPos;
         Vector a = r / distance;
 
-        // Calculate velocity vector components
+        // Calculate velocity Vector components
         double esc = sqrt((GRAVITY * SUN_MASS) / (distance));
         Vector velocity(-a.y * esc, a.x * esc);
 

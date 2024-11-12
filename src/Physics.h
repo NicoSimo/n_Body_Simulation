@@ -1,14 +1,14 @@
 #pragma once
 #include <vector>
 #include <memory>
-#include "body.h"
+#include "Body.h"
 #include "constants.h"
 #include "algorithm.h"
 
 class Physics : public Algorithm
 {
-    const double epsilon = 0.5;
-    const double dt = 25000.0;
+    const float epsilon = 0.5;
+    const float dt = 25000.0;
 
     void calculateAcceleration();
     void calculateVelocity();
