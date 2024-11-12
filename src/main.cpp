@@ -6,15 +6,14 @@
 #include <GLFW/glfw3.h>
 #include "Simulation.h"
 #include "Physics.h"
-
 #include "constants.h"
 
-Vector scaleToWindow(Vector pos)
+glm::vec2 scaleToWindow(glm::vec2 pos)
 {
 
      double scaleX = WINDOW_HEIGHT / NBODY_HEIGHT;
      double scaleY = WINDOW_WIDTH / NBODY_WIDTH;
-     return Vector((pos.x - 0) * scaleX + WINDOW_WIDTH / 2, (pos.y - 0) * scaleY + WINDOW_HEIGHT / 2);
+     return glm::vec2((pos.x - 0) * scaleX + WINDOW_WIDTH / 2, (pos.y - 0) * scaleY + WINDOW_HEIGHT / 2);
 }
 
 void drawDots(Simulation &s)
@@ -26,7 +25,7 @@ void drawDots(Simulation &s)
      {
           glPointSize(5);     // set point size to 5 pixels
           glBegin(GL_POINTS); // start drawing points
-          Vector pos = scaleToWindow(body->position);
+          glm::vec2 pos = scaleToWindow(body->position);
           glVertex2f(pos.x, pos.y);
           glEnd(); // end drawing points
      }

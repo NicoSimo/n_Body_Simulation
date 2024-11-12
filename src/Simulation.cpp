@@ -20,7 +20,7 @@ void Simulation::Simulate()
     bodies.clear();
     double maxDistance = MAX_DIST;
     double minDistance = MIN_DIST;
-    Vector centerPos(CENTERX, CENTERY);
+    glm::vec2 centerPos(CENTERX, CENTERY);
     for (int i = 0; i < nBodies - 1; ++i)
     {
 
@@ -32,19 +32,19 @@ void Simulation::Simulate()
         double x = centerPos.x + radius * std::cos(angle);
         double y = centerPos.y + radius * std::sin(angle);
 
-        Vector position(x, y);
-        double distance = position.getDistance(centerPos);
-        Vector r = position - centerPos;
-        Vector a = r / distance;
+        glm::vec2 position(x, y);
+        double distance = glm::distance(position, centerPos);
+        glm::vec2 r = position - centerPos;
+        glm::vec2 a = r / static_cast<float>(distance);
 
-        // Calculate velocity Vector components
+        // Calculate velocity glm::vec2 components
         double esc = sqrt((GRAVITY * SUN_MASS) / (distance));
-        Vector velocity(-a.y * esc, a.x * esc);
+        glm::vec2 velocity(-a.y * esc, a.x * esc);
 
-        bodies.push_back(std::make_shared<Body>(EARTH_MASS, EARTH_DIA, position, velocity, Vector(0, 0)));
+        bodies.push_back(std::make_shared<Body>(EARTH_MASS, EARTH_DIA, position, velocity, glm::vec2(0, 0)));
     }
 
-    bodies.push_back(std::make_shared<Body>(SUN_MASS, SUN_DIA, centerPos, Vector(0, 0), Vector(0, 0), false));
+    bodies.push_back(std::make_shared<Body>(SUN_MASS, SUN_DIA, centerPos, glm::vec2(0, 0), glm::vec2(0, 0), false));
 }
 
 void Simulation::update()

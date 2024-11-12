@@ -18,7 +18,6 @@ add_executable(nbody
     ../src/main.cpp
     ../src/Body.cpp
     ../src/algorithm.cpp
-    ../src/vector.cpp
     ../src/Simulation.cpp
     ../src/Physics.cpp
 )

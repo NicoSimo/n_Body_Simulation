@@ -1,7 +1,6 @@
 #pragma once
 #include <vector>
 #include <memory>
-#include "vector.h"
 #include "Body.h"
 #include "algorithm.h"
 
