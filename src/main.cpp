@@ -49,7 +49,7 @@ int main(int argc, char* argv[]){
 
     if (!glfwInit())
         return -1;
-        
+
     GLFWwindow *window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "N-Body Simulation CPU", NULL, NULL); // create window
     if (!window)
     {

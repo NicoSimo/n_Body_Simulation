@@ -20,15 +20,15 @@ void Simulation::Simulate(){
     float minDistance = MIN_DIST;
     glm::vec2 centerPos = glm::vec2(CENTERX, CENTERY);
     for (int i = 0; i < nBodies - 1; ++i){
+
         float angle = 2 * M_PI * (rand() / (float)RAND_MAX);
-
         float radius = (maxDistance - minDistance) * (rand() / (float)RAND_MAX) + minDistance;
-
+        
         glm::vec2 position(
             centerPos.x + radius * std::cos(angle), 
             centerPos.y + radius * std::sin(angle)
         );
-
+        
         float distance = glm::length(position - centerPos);
         glm::vec2 r = position - centerPos;
         glm::vec2 a = glm::normalize(r) / distance;
