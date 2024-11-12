@@ -8,7 +8,7 @@
 #include "constants.h"  
 #include "Simulation.h"
 
-Physics::Physics(std::vector<std::shared_ptr<Body>> &bs, int n) : bodies(bs), nBodies(n) {}
+Physics::Physics(std::vector<std::shared_ptr<Body>> &bs) : Algorithm(bs, bs.size()) {}
 
 void Physics::calculateAcceleration()
 {
@@ -24,7 +24,7 @@ void Physics::calculateAcceleration()
             {
                 glm::vec2 rij = bj.position - bi.position;
                 float r = sqrt((rij.x * rij.x) + (rij.y * rij.y) + (epsilon * epsilon));
-                float f = (GRAVITY * bi.mass * bj.mass) / (r * r * r + (epsilon * epsilon));
+                float f = (GRAVITY * bi.mass * bj.mass) / (r * r + (epsilon));
                 force += rij * f;
             }
         }
@@ -57,7 +57,7 @@ bool Physics::isCollide(Body b1, Body b2)
 }
 
 
-void Physics::updateBodies(){
+void Physics::update(){
     calculateAcceleration();
     calculateVelocity();
     calculatePosition();

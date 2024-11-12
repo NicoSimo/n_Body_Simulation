@@ -19,6 +19,7 @@ add_executable(nbody
     ../src/Body.cpp
     ../src/Physics.cpp
     ../src/Simulation.cpp
+    ../src/Algorithm.cpp
 )
 
 target_link_libraries(nbody glfw ${OPENGL_LIBRARY} ${COCOA_LIBRARY})

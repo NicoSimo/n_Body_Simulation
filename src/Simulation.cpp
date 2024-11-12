@@ -8,7 +8,7 @@
 #include "constants.h" 
 #include "Physics.h" 
 
-Simulation::Simulation(int n) : nBodies(n), physics(bodies, nBodies) {
+Simulation::Simulation(int n) : nBodies(n){
     Simulate();
 }
 
@@ -41,6 +41,6 @@ void Simulation::Simulate(){
     bodies.push_back(std::make_shared<Body>(SUN_MASS, SUN_DIA, centerPos, glm::vec2(0, 0), glm::vec2(0, 0), false));
 }
 
-void Simulation::updateForces() {
-    physics.updateBodies(); 
+void Simulation::update() {
+    alg->update(); 
 }

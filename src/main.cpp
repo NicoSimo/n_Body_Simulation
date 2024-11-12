@@ -67,15 +67,13 @@ int main(int argc, char* argv[]){
     {
         glClear(GL_COLOR_BUFFER_BIT); // clear the screen
     
-        s.updateForces();
+        s.update();
         drawDots(s);
     
         glfwSwapBuffers(window); // swap front and back buffers
         glfwPollEvents();        // poll for events
     }
-
     glfwTerminate(); // terminate GLFW
 
-    
     return 0;
 }
