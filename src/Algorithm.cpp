@@ -16,7 +16,7 @@
 
 // credits : https://github.com/Hsin-Hung/N-body-simulation
 
-#include "algorithm.h"
+#include "algorithm.h" 
 
 Algorithm::Algorithm(std::vector<std::shared_ptr<Body>> &bs, int n) : bodies(bs), nBodies(n)
 {
